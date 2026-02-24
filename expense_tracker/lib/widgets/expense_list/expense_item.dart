@@ -22,6 +22,8 @@ class ExpenseItem extends StatelessWidget{
             children: [
               Text('\$${expense.amount.toStringAsFixed(2)}'),
               const Spacer(),
+              ElevatedButton(onPressed: (){}, child: Text("Edit")),
+              const Spacer(),
               Row(
                 children: [
                   Icon(categoryIcon[expense.category]),
