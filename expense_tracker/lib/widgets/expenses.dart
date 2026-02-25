@@ -13,6 +13,7 @@ class Expenses extends StatefulWidget {
 }
 
 class _ExpensesState extends State<Expenses> {
+  bool _sortAscending = false;
   final List<Expense> _registeredExpenses = [
     Expense(
       title: "Flutter Course",
@@ -41,6 +42,23 @@ class _ExpensesState extends State<Expenses> {
     });
   }
 
+  void _openEditExpenseOverlay(Expense expense) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (ctx) => NewExpense(
+        expense: expense,
+        onAddExpense: (updatedExpense) {
+          final index = _registeredExpenses.indexOf(expense);
+
+          setState(() {
+            _registeredExpenses[index] = updatedExpense;
+          });
+        },
+      ),
+    );
+  }
+
   void _removeExpense(Expense expense) {
     final expenseIndex = _registeredExpenses.indexOf(expense);
     setState(() {
@@ -52,42 +70,63 @@ class _ExpensesState extends State<Expenses> {
         duration: Duration(seconds: 3),
         content: const Text("Expense Deleted"),
         action: SnackBarAction(
-          label: 'Undo', 
-          onPressed: (){
+          label: 'Undo',
+          onPressed: () {
             setState(() {
-            _registeredExpenses.insert(expenseIndex, expense);              
-            }
-          );
-          }
+              _registeredExpenses.insert(expenseIndex, expense);
+            });
+          },
         ),
-      )
+      ),
     );
+  }
+
+  void _sortExpensesByDate() {
+    setState(() {
+      _sortAscending = !_sortAscending;
+
+      _registeredExpenses.sort((a, b) {
+        if (_sortAscending) {
+          return a.date.compareTo(b.date); // Oldest → Newest
+        } else {
+          return b.date.compareTo(a.date); // Newest → Oldest
+        }
+      });
+    });
   }
 
   @override
   Widget build(context) {
     Widget mainContent = const Center(
-      child: Text("No expense found. Plese add some!")
+      child: Text("No expense found. Plese add some!"),
     );
-    if (_registeredExpenses.isNotEmpty){
-            mainContent = ExpenseList(
-              expenses: _registeredExpenses,
-              onRemoveExpense: _removeExpense,
-            );
+    if (_registeredExpenses.isNotEmpty) {
+      mainContent = ExpenseList(
+        expenses: _registeredExpenses,
+        onRemoveExpense: _removeExpense,
+        onEditExpense: _openEditExpenseOverlay,
+      );
     }
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Flutter Expense tracker"),
+        title: const Text("Flutter Expense Tracker"),
         actions: [
-          IconButton(onPressed: _openAddExpenseOverlay, icon: Icon(Icons.add)),
+          IconButton(
+            onPressed: _sortExpensesByDate,
+            icon: Icon(
+              _sortAscending ? Icons.arrow_upward : Icons.arrow_downward,
+            ),
+          ),
+          IconButton(
+            onPressed: _openAddExpenseOverlay,
+            icon: const Icon(Icons.add),
+          ),
         ],
       ),
       body: Column(
         children: [
           const Text("The Chart"),
-          Expanded(
-            child: mainContent,
-          ),
+          Expanded(child: mainContent),
         ],
       ),
     );

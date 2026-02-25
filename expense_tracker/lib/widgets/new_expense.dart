@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:expense_tracker/models/expense.dart';
 
 class NewExpense extends StatefulWidget {
-  const NewExpense({super.key, required this.onAddExpense});
+  const NewExpense({super.key, required this.onAddExpense, this.expense});
 
   final Function(Expense expense) onAddExpense;
+  final Expense? expense;
 
   @override
   State<NewExpense> createState() {
@@ -27,7 +28,6 @@ class _NewExpenseState extends State<NewExpense> {
     _amountController.dispose();
     super.dispose();
   }
-
   void _submitExpenseData() {
     final enteredAmount = double.tryParse(_amountController.text);
     final invalidAmount = enteredAmount == null || enteredAmount <= 0;
@@ -63,7 +63,6 @@ class _NewExpenseState extends State<NewExpense> {
     );
     Navigator.pop(context);
   }
-
   void _presentDatePicker() async {
     final now = DateTime.now();
     final firstDate = DateTime(now.year - 5, now.month, now.day);
@@ -77,7 +76,17 @@ class _NewExpenseState extends State<NewExpense> {
       _selectedDate = pickDate;
     });
   }
+@override
+void initState() {
+  super.initState();
 
+  if (widget.expense != null) {
+    _titleController.text = widget.expense!.title;
+    _amountController.text = widget.expense!.amount.toString();
+    _selectedDate = widget.expense!.date;
+    _selectedCategory = widget.expense!.category;
+  }
+}
   @override
   Widget build(context) {
     return Padding(
