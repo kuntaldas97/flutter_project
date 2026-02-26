@@ -18,22 +18,21 @@ Widget build(BuildContext context) {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(expense.title),
+          Text(expense.title,
+                style: Theme.of(context).textTheme.titleLarge
+          ),
           const SizedBox(height: 4),
-
           // Amount + Category Row
           Row(
             children: [
-              Text('\$${expense.amount.toStringAsFixed(2)}'),
+              Text('\u20B9${expense.amount.toStringAsFixed(2)}'),
               const Spacer(),
               Icon(categoryIcon[expense.category]),
               const SizedBox(width: 8),
               Text(expense.formatedDate),
             ],
           ),
-
-          const SizedBox(height: 10),
-
+           const SizedBox(height: 10),
           // Centered Edit Button
           Center(
             child: ElevatedButton(

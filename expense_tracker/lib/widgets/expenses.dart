@@ -125,7 +125,7 @@ class _ExpensesState extends State<Expenses> {
       ),
       body: Column(
         children: [
-          const Text("The Chart"),
+          const Text("The Chart", style: TextStyle(fontSize: 18, fontWeight:FontWeight.bold )),
           Expanded(child: mainContent),
         ],
       ),

@@ -106,7 +106,7 @@ void initState() {
                   controller: _amountController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    prefixText: '\$ ',
+                    prefixText: '\u20B9 ',
                     label: Text("Amount"),
                   ),
                 ),
