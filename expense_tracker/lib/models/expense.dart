@@ -7,7 +7,7 @@ enum Category {food, travel, leisure, work}
 
 final formatter=DateFormat.yMd();
 
-const categoryIcon={
+const categoryIcons={
   Category.food: Icons.lunch_dining,
   Category.travel:Icons.flight_takeoff,
   Category.leisure:Icons.movie,
@@ -44,7 +44,7 @@ class ExpenseBucket{
   final Category category;
   final List<Expense> expenses;
 
-  double get totalExpense{
+  double get totalExpenses{
 
     double sum =0;
 

@@ -27,7 +27,7 @@ Widget build(BuildContext context) {
             children: [
               Text('\u20B9${expense.amount.toStringAsFixed(2)}'),
               const Spacer(),
-              Icon(categoryIcon[expense.category]),
+              Icon(categoryIcons[expense.category]),
               const SizedBox(width: 8),
               Text(expense.formatedDate),
             ],
