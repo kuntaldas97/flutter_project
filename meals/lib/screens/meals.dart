@@ -10,6 +10,7 @@ final List<Meal> meals;
   Widget build(BuildContext context) {
     Widget content = Center(
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Text("Uh oh... nothing's here!",
                 style: Theme.of(context).textTheme.headlineLarge!.copyWith(
