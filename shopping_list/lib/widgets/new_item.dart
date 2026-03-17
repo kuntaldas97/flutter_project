@@ -1,47 +1,69 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_list/data/categories.dart';
 
-class NewItem extends StatefulWidget{
+class NewItem extends StatefulWidget {
+  
   const NewItem({super.key});
   @override
   State<NewItem> createState() {
     return _NewItemState();
   }
 }
-class _NewItemState extends State<NewItem>{
+
+class _NewItemState extends State<NewItem> {
+  final _formKey=GlobalKey<FormState>();
+
+  void _saveItem(){
+    _formKey.currentState!.validate();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Add a new item!"),
-      ),
+      appBar: AppBar(title: Text("Add a new item!")),
       body: Padding(
         padding: EdgeInsets.all(12),
         child: Form(
+          key: _formKey,
           child: Column(
             children: [
               TextFormField(
                 maxLength: 50,
-                decoration: const InputDecoration(
-                  label: Text("Name")
-                ),
-                validator: (value) => 'Demo',
+                decoration: const InputDecoration(label: Text("Name")),
+                validator: (value) {
+                  if (value == null ||
+                      value.isEmpty ||
+                      value.trim().length <= 1 ||
+                      value.trim().length > 50) {
+                    return "Must be between 1 & 50 characters";
+                  }
+                  return null;
+                },
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Expanded(
                     child: TextFormField(
-                      decoration: InputDecoration(
-                        label: Text("Quantity"),
-                      ),
-                    
-                      initialValue: '1',
+                      decoration: InputDecoration(label: Text("Quantity")),
+                      // initialValue: '1',
+                      validator: (value) {
+                        if (value == null ||
+                            value.isEmpty ||
+                            int.tryParse(value)==null ||
+                            int.tryParse(value)!<=0) {
+                          return "Must be a valid positive quantity";
+                        }
+                        return null;
+                      },
                     ),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: DropdownButtonFormField(
+                      decoration: InputDecoration(
+                      label: Text("Select Category"),
+                      border: OutlineInputBorder()
+                      ),
                       items: [
                         for (final category in categories.entries)
                           DropdownMenuItem(
@@ -54,19 +76,35 @@ class _NewItemState extends State<NewItem>{
                                   color: category.value.color,
                                 ),
                                 const SizedBox(width: 6),
-                                Text(category.value.identifier)
+                                Text(category.value.identifier),
                               ],
                             ),
-                          )
-                      ], 
-                      onChanged: (value){}),
-                  )
+                          ),
+                      ],
+                      onChanged: (value) {},
+                    ),
+                  ),
                 ],
-              )
+              ),
+              const SizedBox(height: 12),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      _formKey.currentState!.reset();
+                    }, 
+                    child: const Text('Reset')),
+                  ElevatedButton(
+                    onPressed: _saveItem,
+                    child: const Text('Add Item'),
+                  ),
+                ],
+              ),
             ],
-          )
           ),
         ),
+      ),
     );
   }
 }
