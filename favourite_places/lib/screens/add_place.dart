@@ -1,0 +1,36 @@
+import 'package:flutter/material.dart';
+
+class AddPlaceScreen extends StatefulWidget{
+
+  @override
+  State<AddPlaceScreen> createState() {
+    return _AddPlaceScreenState();
+  }
+}
+
+class _AddPlaceScreenState extends State<AddPlaceScreen>{
+  final _titleController = TextEditingController();
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    super.dispose();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Add new Place"),
+      ),
+      body: SingleChildScrollView(child: Column(
+        children: [
+          TextField(
+            decoration: InputDecoration(labelText: 'Title'),
+            controller: _titleController,
+          )
+        ],
+      ),
+    ),
+    );
+  }
+}
