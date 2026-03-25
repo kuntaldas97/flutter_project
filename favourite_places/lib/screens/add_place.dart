@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AddPlaceScreen extends StatefulWidget{
-
+  const AddPlaceScreen({super.key});
   @override
   State<AddPlaceScreen> createState() {
     return _AddPlaceScreenState();
@@ -27,6 +27,12 @@ class _AddPlaceScreenState extends State<AddPlaceScreen>{
           TextField(
             decoration: InputDecoration(labelText: 'Title'),
             controller: _titleController,
+          ),
+          const SizedBox(height: 16),
+          ElevatedButton.icon(
+            onPressed: (){}, 
+            icon: const Icon(Icons.add),
+            label: const Text("Add Place"),
           )
         ],
       ),
