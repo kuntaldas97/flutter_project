@@ -22,11 +22,16 @@ class _AddPlaceScreenState extends State<AddPlaceScreen>{
       appBar: AppBar(
         title: const Text("Add new Place"),
       ),
-      body: SingleChildScrollView(child: Column(
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(12),
+        child: Column(
         children: [
           TextField(
             decoration: InputDecoration(labelText: 'Title'),
             controller: _titleController,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onSurface
+            ),
           ),
           const SizedBox(height: 16),
           ElevatedButton.icon(
