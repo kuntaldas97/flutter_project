@@ -20,7 +20,7 @@ class _ImageInputState extends State<ImageInput>{
     alignment: Alignment.center,
     child: TextButton.icon(
       icon: Icon(Icons.camera),
-      onPressed: (){}, 
+      onPressed: _takePicture, 
       label: Text("Take Picture")),
    );
   }
