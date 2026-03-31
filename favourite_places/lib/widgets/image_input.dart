@@ -8,10 +8,48 @@ class ImageInput extends StatefulWidget{
   }
 }
 class _ImageInputState extends State<ImageInput>{
-  void _takePicture(){
-    final imagePicker = ImagePicker();
-    imagePicker.pickImage(source: ImageSource.camera,maxHeight: 600);
-  }
+ void _selectImageSource() {
+  showModalBottomSheet(
+    context: context,
+    builder: (ctx) {
+      return SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: Icon(Icons.camera),
+              title: Text('Camera'),
+              onTap: () {
+                Navigator.of(ctx).pop();
+                _pickImage(ImageSource.camera);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.photo),
+              title: Text('Gallery'),
+              onTap: () {
+                Navigator.of(ctx).pop();
+                _pickImage(ImageSource.gallery);
+              },
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
+void _pickImage(ImageSource source) async {
+  final imagePicker = ImagePicker();
+
+  final pickedImage = await imagePicker.pickImage(
+    source: source,
+    maxHeight: 600,
+  );
+
+  if (pickedImage == null) return;
+
+  // You can store or display the image here
+}
   @override
   Widget build(BuildContext context) {
    return Container(
@@ -20,8 +58,8 @@ class _ImageInputState extends State<ImageInput>{
     alignment: Alignment.center,
     child: TextButton.icon(
       icon: Icon(Icons.camera),
-      onPressed: _takePicture, 
-      label: Text("Take Picture")),
+      onPressed: _selectImageSource, 
+      label: Text("Select Image")),
    );
   }
 }
