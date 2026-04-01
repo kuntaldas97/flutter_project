@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -40,7 +41,7 @@ class _ImageInputState extends State<ImageInput>{
 }
 void _pickImage(ImageSource source) async {
   final imagePicker = ImagePicker();
-
+  File? _selectedImage;
   final pickedImage = await imagePicker.pickImage(
     source: source,
     maxHeight: 600,
@@ -49,6 +50,7 @@ void _pickImage(ImageSource source) async {
   if (pickedImage == null) return;
 
   // You can store or display the image here
+  _selectedImage = File(pickedImage.path);
 }
   @override
   Widget build(BuildContext context) {
