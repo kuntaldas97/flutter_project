@@ -1,0 +1,28 @@
+name: ultimate_tic_tac_toe_ai
+description: Ultimate Tic Tac Toe AI – dynamic board sizes 3×3 to 7×7 with minimax AI opponent.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  provider: ^6.1.2      # State management for GameController
+  google_fonts: ^6.2.1  # Optional: enhanced typography
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  # Uncomment to add a custom font:
+  # fonts:
+  #   - family: Poppins
+  #     fonts:
+  #       - asset: assets/fonts/Poppins-Regular.ttf
+  #       - asset: assets/fonts/Poppins-Bold.ttf
+  #         weight: 700
